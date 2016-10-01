@@ -26,13 +26,18 @@ class TweetsController < ApplicationController
     @tweet = Tweet.find(params[:id])
   end
 
-  def move_to_index
-    redirect_to action: :index unless user_signed_in?
+  def show
+    @tweet = Tweet.find(params[:id])
+    @comments = @tweet.comments.includes(:user)
   end
 
   private
   def tweet_params
     params.permit(:image, :text)
+  end
+
+  def move_to_index
+    redirect_to action: :index unless user_signed_in?
   end
 
 end
